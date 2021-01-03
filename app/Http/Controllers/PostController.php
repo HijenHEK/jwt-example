@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['index','show']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +35,7 @@ class PostController extends Controller
             'body' => 'required|min:2'
         ]);
         $post = Post::create([
-            'body' => 'required|min:2',
+            'body' => $request->body,
             'user_id' =>  auth()->user()->id
         ]);
         return response($post , 200)->header('content-type', 'application/json');
@@ -60,7 +66,7 @@ class PostController extends Controller
             'body' => 'required|min:2'
         ]);
         $post->update([
-            'body' => 'required|min:2',
+            'body' =>  $request->body,
             'user_id' =>  auth()->user()->id
         ]);
         return response($post , 200)->header('content-type', 'application/json');
