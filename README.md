@@ -1,4 +1,4 @@
-#laravel jwt example
+# laravel jwt example
 
 this is an api created by laravel and powered by a token based authentification system created by jwt, it demonstrate token authentification with a crud example , used with the following frontend : [vue auth jwt example ](https://github.com/HijenHEK/vue-auth-jwt-example) running on seperate webservers
 
