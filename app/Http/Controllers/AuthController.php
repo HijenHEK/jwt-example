@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -37,7 +38,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
-        
+
         $token = auth()->login($user);
 
         return $this->respondWithToken($token);
@@ -67,6 +68,23 @@ class AuthController extends Controller
     public function me()
     {
         return response()->json(auth()->user());
+    }
+
+    /**
+     * Check token.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function check()
+    {
+        if(auth()->check())
+            return response()->json([
+                'message' => 'authenticated'
+            ]);
+
+        return response()->json([
+            'message' => 'Unauthenticated'
+        ], Response::HTTP_UNAUTHORIZED);
     }
 
     /**
